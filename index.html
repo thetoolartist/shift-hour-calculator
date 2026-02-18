@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shift Hours Calculator</title>
+
+<style>
+*{box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+
+body{
+ margin:0;
+ height:100vh;
+ background:#FBFBFB;
+ display:flex;
+
+ /* ✅ ADDED — CENTERING + NO SHIFT */
+ justify-content:center;
+ align-items:center;
+ overflow:hidden;
+}
+
+.container{
+ display:flex;
+ flex-direction:column;
+ width:60%;
+ height:100vh;
+ padding:10px 24px;
+ gap:10px;
+ text-align:center;
+}
+
+/* ===== HEADING STYLE (CENTERED) ===== */
+.header{
+ width:100%;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ text-align:center;
+}
+
+.heading{
+ font-size:42px;
+ font-weight:900;
+ letter-spacing:.5px;
+ background:linear-gradient(90deg,#0ea5e9,#2563eb,#4f46e5);
+ -webkit-background-clip:text;
+ -webkit-text-fill-color:transparent;
+}
+
+.sub{
+ color:#475569;
+ font-weight:600;
+ margin-top:4px;
+}
+
+/* ===== AD SPACE (EMPTY RESERVED AREA) ===== */
+.ad-space{
+ width:100%;
+ height:90px;
+ border-radius:14px;
+}
+
+/* ===== MAIN ===== */
+.main{
+ flex:1;
+ display:flex;
+ gap:18px;
+ min-height:0;
+}
+
+/* LEFT PANEL */
+.left-panel{
+ width:32%;
+ display:flex;
+ flex-direction:column;
+ gap:16px;
+}
+
+.card{
+ background:#C5BAFF;
+ padding:14px;
+ border-radius:14px;
+ box-shadow:0 6px 16px rgba(0,0,0,0.05);
+ height:110px;   /* FIXED */
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+}
+
+/* ✅ ONLY KEKA CARD BIGGER */
+.left-panel .card:nth-child(2){
+ height:230px;
+ justify-content:flex-start;
+ padding-top:12px;
+}
+
+
+label{
+ font-size:17px;
+ font-weight:800;
+ color:#1e293b;
+ display:block;
+ margin-bottom:8px;
+}
+
+select, textarea{
+ width:100%;
+ padding:3px;
+ border-radius:10px;
+ border:1px solid #cbd5e1;
+ background:#E8F9FF;
+ font-size:15px;
+}
+
+textarea{
+ height:170px;
+ min-height:170px;
+ max-height:170px;
+ resize:none;
+ overflow-y:auto;
+ background:white;
+}
+
+
+
+button{
+ width:100%;
+ padding:16px;
+ border:none;
+ border-radius:12px;
+ font-size:18px;
+ font-weight:800;
+ background:linear-gradient(90deg,#2563eb,#4f46e5);
+ color:white;
+ cursor:pointer;
+}
+
+.note{
+ background:#fef3c7;
+ color:#b91c1c;
+ padding:14px;
+ border-radius:12px;
+ font-weight:600;
+ font-size:14px;
+}
+
+/* RIGHT PANEL */
+.right-panel{
+ flex:1;
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:16px;
+ grid-auto-rows:115px;   /* CRITICAL */
+ align-content:start;
+}
+
+
+.result-card{
+ background:#C5BAFF;
+ padding:14px;
+ border-radius:14px;
+ box-shadow:0 6px 16px rgba(0,0,0,0.05);
+ height:115px;   /* FIXED */
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+}
+
+
+.result-title{
+ font-size:18px;
+ font-weight:900;
+ color:#1e293b;
+ margin-bottom:10px;
+}
+
+.result-value{
+ background:#E8F9FF;
+ padding:10px;
+ border-radius:10px;
+ font-size:18px;
+ font-weight:700;
+ height:44px;   /* VERY IMPORTANT */
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ white-space:nowrap;
+ overflow:hidden;
+}
+
+
+.leave{background:#2563eb;color:white}
+.yes{background:#16a34a;color:white}
+.no{background:#dc2626;color:white}
+
+
+/* ===== SIGNATURE ===== */
+.signature{
+ position:fixed;
+ bottom:12px;
+ right:18px;
+ font-size:18px;
+ font-weight:600;
+ font-style:italic;
+ letter-spacing:.5px;
+
+ background:linear-gradient(90deg,#3b82f6,#8b5cf6,#ec4899);
+ -webkit-background-clip:text;
+ -webkit-text-fill-color:transparent;
+
+ opacity:.9;
+ user-select:none;
+ pointer-events:none;
+}
+
+
+/* ===== BLAST ANIMATION ===== */
+.blast{
+ position:fixed;
+ bottom:0;
+ left:50%;
+ transform:translateX(-50%);
+ width:300px;
+ height:300px;
+ pointer-events:none;
+ opacity:0;
+}
+
+.blast.active{animation:blastAnim 1.2s ease-out}
+
+@keyframes blastAnim{
+ 0%{opacity:1;transform:translateX(-50%) scale(.2)}
+ 60%{opacity:1;transform:translateX(-50%) scale(1.2)}
+ 100%{opacity:0;transform:translateX(-50%) scale(1.8)}
+}
+
+.blast::before,
+.blast::after{
+ content:"";
+ position:absolute;
+ width:100%;
+ height:100%;
+ border-radius:50%;
+ border:4px solid #2563eb;
+ animation:ring 1.2s ease-out;
+}
+
+.blast::after{animation-delay:.2s}
+
+@keyframes ring{
+ 0%{transform:scale(.3);opacity:1}
+ 100%{transform:scale(1.6);opacity:0}
+}
+
+@media(max-width:1000px){
+ body{height:auto}
+ .container{height:auto}
+ .main{flex-direction:column}
+ .left-panel{width:100%}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+ <div class="heading">Shift Hours Calculator</div>
+ <div class="sub">Paste KEKA Log → Click Calculate</div>
+</div>
+
+<div class="ad-space"></div>
+
+<div class="main">
+
+<div class="left-panel">
+
+<div class="card">
+<label>Shift</label>
+<select id="shift">
+<option>Full Day</option>
+<option>Half Day</option>
+</select>
+</div>
+
+<div class="card">
+<label>KEKA Log Paste</label>
+<textarea id="log"></textarea>
+</div>
+
+<button onclick="calc()">Calculate</button>
+
+<div class="note">
+Note : If you have more then one attempts for IN or OUT then place last attempt Log.
+</div>
+
+</div>
+
+<div class="right-panel">
+<div class="result-card"><div class="result-title">Current Time</div><div id="current" class="result-value"></div></div>
+<div class="result-card"><div class="result-title">Arrival</div><div id="arrival" class="result-value"></div></div>
+<div class="result-card"><div class="result-title">Require HR Hours</div><div id="req" class="result-value"></div></div>
+<div class="result-card"><div class="result-title">Effective Hours</div><div id="eff" class="result-value"></div></div>
+<div class="result-card"><div class="result-title">Out Time</div><div id="out" class="result-value"></div></div>
+<div class="result-card"><div class="result-title">Gross Hours</div><div id="gross" class="result-value"></div></div>
+<div class="result-card"><div class="result-title">You can Leave After</div><div id="leave" class="result-value leave"></div></div>
+<div class="result-card"><div class="result-title">Can you Leave Now?</div><div id="can" class="result-value"></div></div>
+</div>
+
+</div>
+
+</div>
+
+<div id="blast" class="blast"></div>
+
+<script>
+
+function calc(){
+const shift=document.getElementById('shift').value;
+const raw=document.getElementById('log').value.split('\n').filter(x=>x.trim()!=='' && x!=='MISSING');
+if(raw.length<2)return;
+
+let times=raw.map(t=>parseTime(t));
+let arrival=times[0];
+
+let eff=0;
+let out=0;
+
+for(let i=0;i<times.length-1;i++){
+ let diff=diffSec(times[i],times[i+1]);
+ if(i%2===0) eff+=diff;
+ else out+=diff;
+}
+
+if(times.length%2===1){
+ let nowSec=getNowSec();
+ eff+=diffSec(times[times.length-1],nowSec);
+}
+
+let req = shift==='Full Day'?28800:14400;
+let gross=eff+out;
+let leaveAfter=arrival+req+out;
+
+/* OUTPUT */
+
+document.getElementById('arrival').innerText=formatAMPM(arrival);
+document.getElementById('req').innerText=secToTime(req);
+document.getElementById('eff').innerText=secToTime(eff);
+document.getElementById('out').innerText=secToTime(out);
+document.getElementById('gross').innerText=secToTime(gross);
+document.getElementById('leave').innerText=formatAMPM(leaveAfter);
+
+let now=getNowSec();
+let can=now>=leaveAfter;
+
+let canBox=document.getElementById('can');
+canBox.innerText=can?'Yes':'No';
+canBox.className='result-value '+(can?'yes':'no');
+
+if(can) triggerBlast();
+
+updateClock();
+}
+
+let clockStarted=false;
+
+function updateClock(){
+ if(clockStarted) return;
+ clockStarted=true;
+
+ setInterval(()=>{
+  document.getElementById('current').innerText=formatAMPM(getNowSec());
+ },1000);
+}
+
+updateClock();
+
+
+function parseTime(t){
+ if(t.includes('AM')||t.includes('PM')) return parseAMPM(t);
+ let p=t.split(':');
+ return (+p[0])*3600+(+p[1])*60+(+p[2]);
+}
+
+function parseAMPM(t){
+ let [time,mod]=t.split(' ');
+ let [h,m,s]=time.split(':').map(Number);
+ if(mod==='PM' && h!==12)h+=12;
+ if(mod==='AM' && h===12)h=0;
+ return h*3600+m*60+s;
+}
+
+function diffSec(a,b){if(b<a)b+=86400;return b-a}
+
+function secToTime(sec){
+ sec=Math.floor(sec);
+ let h=Math.floor(sec/3600);
+ let m=Math.floor((sec%3600)/60);
+ let s=sec%60;
+ return pad(h)+':'+pad(m)+':'+pad(s);
+}
+
+function formatAMPM(sec){
+ sec=sec%86400;
+ let h=Math.floor(sec/3600);
+ let m=Math.floor((sec%3600)/60);
+ let s=sec%60;
+ let ampm=h>=12?'PM':'AM';
+ h=h%12||12;
+ return pad(h)+':'+pad(m)+':'+pad(s)+' '+ampm;
+}
+
+function pad(n){return n.toString().padStart(2,'0')}
+
+function getNowSec(){
+ let d=new Date();
+ return d.getHours()*3600+d.getMinutes()*60+d.getSeconds();
+}
+
+</script>
+
+<!-- SIGNATURE -->
+
+<div class="signature">— Arun Gajjar</div>
+
+
+</span>
+
+</div>
+
+</body>
+</html>
