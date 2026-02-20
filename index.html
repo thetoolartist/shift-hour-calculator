@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Shift Hours Calculator</title>
+<title>Shift Hours Dashboard</title>
 
 <style>
 *{box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
@@ -268,7 +268,7 @@ button{
 <div class="container">
 
 <div class="header">
- <div class="heading">Shift Hours Calculator</div>
+ <div class="heading">Shift Hours Dashboard</div>
  <div class="sub">Paste KEKA Log → Click Calculate</div>
 </div>
 
@@ -354,7 +354,17 @@ document.getElementById('gross').innerText=secToTime(gross);
 document.getElementById('leave').innerText=formatAMPM(leaveAfter);
 
 let now=getNowSec();
-let can=now>=leaveAfter;
+
+/* normalize leaveAfter to 24 hr clock */
+let leaveAfterNorm = leaveAfter % 86400;
+
+/* handle cross midnight correctly */
+let can;
+if(leaveAfter >= 86400){
+    can = now >= leaveAfterNorm || now <= leaveAfterNorm;
+}else{
+    can = now >= leaveAfterNorm;
+}
 
 let canBox=document.getElementById('can');
 canBox.innerText=can?'Yes':'No';
@@ -433,6 +443,3 @@ function getNowSec(){
 
 </body>
 </html>
-
-<!-- deploy trigger -->
-
