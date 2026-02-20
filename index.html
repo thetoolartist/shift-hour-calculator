@@ -353,18 +353,8 @@ document.getElementById('out').innerText=secToTime(out);
 document.getElementById('gross').innerText=secToTime(gross);
 document.getElementById('leave').innerText=formatAMPM(leaveAfter);
 
-let now=getNowSec();
-
-/* normalize leaveAfter to 24 hr clock */
-let leaveAfterNorm = leaveAfter % 86400;
-
-/* handle cross midnight correctly */
-let can;
-if(leaveAfter >= 86400){
-    can = now >= leaveAfterNorm || now <= leaveAfterNorm;
-}else{
-    can = now >= leaveAfterNorm;
-}
+/* Correct Rule → Effective Hours Must Reach Required Hours */
+let can = eff >= req;
 
 let canBox=document.getElementById('can');
 canBox.innerText=can?'Yes':'No';
