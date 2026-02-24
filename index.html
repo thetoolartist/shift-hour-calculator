@@ -9,20 +9,15 @@
 <style>
 *{box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
 
-html, body {
- height:100%;
- margin:0;
- padding:0;
-}
-
 body{
- min-height:100vh;
+ margin:0;
+ height:100vh;
  background:#FBFBFB;
-}
+ display:flex;
 
  /* ✅ ADDED — CENTERING + NO SHIFT */
  justify-content:center;
-
+ align-items:center;
  overflow:hidden;
 }
 
@@ -30,8 +25,7 @@ body{
  display:flex;
  flex-direction:column;
  width:60%;
- min-height:100vh;
- margin:0 auto;
+ height:100vh;
  padding:10px 24px;
  gap:10px;
  text-align:center;
@@ -74,9 +68,8 @@ body{
  display:flex;
  gap:18px;
  min-height:0;
- justify-content:center;
- align-items:center;
 }
+
 /* LEFT PANEL */
 .left-panel{
  width:32%;
@@ -439,23 +432,5 @@ function getNowSec(){
 
 </div>
 
-<script>
-/* Disable Right Click */
-document.addEventListener('contextmenu', e => e.preventDefault());
-
-/* Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U */
-document.addEventListener('keydown', function(e) {
-    if (
-        e.key === "F12" ||
-        (e.ctrlKey && e.shiftKey && e.key === "I") ||
-        (e.ctrlKey && e.shiftKey && e.key === "J") ||
-        (e.ctrlKey && e.key === "U")
-    ) {
-        e.preventDefault();
-    }
-});
-</script>
-
 </body>
 </html>
-
