@@ -8,11 +8,16 @@
 <style>
 *{box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
 
-body{
+html, body {
+ height:100%;
  margin:0;
- height:100vh;
+ padding:0;
+}
+
+body{
+ min-height:100vh;
  background:#FBFBFB;
- display:flex;
+}
 
  /* ✅ ADDED — CENTERING + NO SHIFT */
  justify-content:center;
@@ -24,7 +29,8 @@ body{
  display:flex;
  flex-direction:column;
  width:60%;
- height:100vh;
+ min-height:100vh;
+ margin:0 auto;
  padding:10px 24px;
  gap:10px;
  text-align:center;
@@ -67,9 +73,9 @@ body{
  display:flex;
  gap:18px;
  min-height:0;
- margin-top:40px;   /* 👈 Add this line */
+ justify-content:center;
+ align-items:center;
 }
-
 /* LEFT PANEL */
 .left-panel{
  width:32%;
