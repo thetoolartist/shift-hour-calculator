@@ -7,11 +7,16 @@
 <title>Shift Hours Dashboard</title>
 
 <style>
+
+html{
+ overflow-y:scroll;
+}
+
 *{box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+
 
 body{
  margin:0;
- min-height:100vh;
  background:#FBFBFB;
 }
 
@@ -19,8 +24,8 @@ body{
  display:flex;
  flex-direction:column;
  width:60%;
- min-height:70vh;   /* reduced from 100vh */
- margin:40px auto;  /* adds balanced top spacing */
+ max-width:1200px;
+ margin:40px auto;
  padding:10px 24px;
  gap:10px;
  text-align:center;
@@ -59,11 +64,9 @@ body{
 
 /* ===== MAIN ===== */
 .main{
- flex:1;
  display:flex;
  gap:18px;
- min-height:0;
- align-items:center;   /* this centers the table area only */
+ align-items:flex-start;
 }
 
 /* LEFT PANEL */
@@ -251,11 +254,7 @@ button{
 }
 
 @media(max-width:1000px){
- .container{min-height:auto}
- .main{
-   flex-direction:column;
-   align-items:stretch;
- }
+ .main{flex-direction:column}
  .left-panel{width:100%}
 }
 
@@ -426,7 +425,6 @@ function getNowSec(){
 <div class="signature">— Arun Gajjar</div>
 
 
-</span>
 
 </div>
 
