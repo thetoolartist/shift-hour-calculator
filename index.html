@@ -11,19 +11,16 @@
 
 body{
  margin:0;
- min-height:100vh;   /* change only this */
+ min-height:100vh;
  background:#FBFBFB;
- display:flex;
- justify-content:center;
- align-items:center;
- overflow:hidden;
 }
 
 .container{
  display:flex;
  flex-direction:column;
  width:60%;
- height:100vh;
+ min-height:70vh;   /* reduced from 100vh */
+ margin:40px auto;  /* adds balanced top spacing */
  padding:10px 24px;
  gap:10px;
  text-align:center;
@@ -66,6 +63,7 @@ body{
  display:flex;
  gap:18px;
  min-height:0;
+ align-items:center;   /* this centers the table area only */
 }
 
 /* LEFT PANEL */
@@ -253,8 +251,11 @@ button{
 }
 
 @media(max-width:1000px){
- .container{height:auto}
- .main{flex-direction:column}
+ .container{min-height:auto}
+ .main{
+   flex-direction:column;
+   align-items:stretch;
+ }
  .left-panel{width:100%}
 }
 
